@@ -10,6 +10,15 @@ export default class Detail extends React.Component {
         let targets = visita["Targets"];
         let customer = visita["Customer"];
         let salesman = visita["Salesman"];
+        if(targets.length === 0){
+            return(
+                <div key={"Detail"+indice}>
+                    <VisitDetail visit={visita} mykey={indice}/>
+                    <CustomerDetail customer={customer} mykey={indice}/>
+                    <SalesmanDetail salesman={salesman} mykey={indice}/>
+                </div>
+            );
+        }
         return(
             <div key={"Detail"+indice}>
                 <VisitDetail visit={visita} mykey={indice}/>
