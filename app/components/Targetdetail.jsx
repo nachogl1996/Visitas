@@ -7,8 +7,6 @@ export default class Targetdetail extends React.Component {
         if(targets.length === 0){
             return;
         }
-        console.log("aaaaaaaaaa");
-        console.log(targets.length);
         let targetelement = targets.map((target, indice) => {
             return(<div key={"TargetList"+indice}><ul><TargetElement target={target} mykey={indice}/></ul></div>)
         });

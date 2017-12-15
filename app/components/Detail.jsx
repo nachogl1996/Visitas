@@ -6,6 +6,9 @@ import SalesmanDetail from "./SalesmanDetail";
 export default class Detail extends React.Component {
     render() {
         let visita = this.props.visita;
+        if(visita === null || visita === undefined){
+            return(<h1>No hay detalles</h1>);
+        }
         let indice = this.props.mykey;
         let targets = visita["Targets"];
         let customer = visita["Customer"];
