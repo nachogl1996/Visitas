@@ -3,6 +3,7 @@ import VisitDetail from "./VisitDetail";
 import TargetDetail from "./Targetdetail";
 import CustomerDetail from "./CustomerDetail";
 import SalesmanDetail from "./SalesmanDetail";
+import { Col, Accordion, Panel } from 'react-bootstrap';
 export default class Detail extends React.Component {
     render() {
         let visita = this.props.visita;
@@ -17,18 +18,28 @@ export default class Detail extends React.Component {
             return(
                 <div key={"Detail"+indice}>
                     <VisitDetail visit={visita} mykey={indice}/>
-                    <CustomerDetail customer={customer} mykey={indice}/>
-                    <SalesmanDetail salesman={salesman} mykey={indice}/>
+                    <Accordion>
+                        <SalesmanDetail salesman={salesman} mykey={indice}/>
+                        <Col md={7} mdOffset={1} xd={12}>
+                            <Panel collapsible header="Objetivos" eventKey="3" className="listelement">
+                                <p>No hay objetivos</p>
+                            </Panel>
+                        </Col>
+                        <CustomerDetail customer={customer} mykey={indice}/>
+                    </Accordion>
+                </div>
+            );
+        } else {
+            return(
+                <div key={"Detail"+indice}>
+                    <VisitDetail visit={visita} mykey={indice}/>
+                    <Accordion>
+                        <SalesmanDetail salesman={salesman} mykey={indice}/>
+                        <TargetDetail targets={targets} mykey={indice}/>
+                        <CustomerDetail customer={customer} mykey={indice}/>
+                    </Accordion>
                 </div>
             );
         }
-        return(
-            <div key={"Detail"+indice}>
-                <VisitDetail visit={visita} mykey={indice}/>
-                <TargetDetail targets={targets} mykey={indice}/>
-                <CustomerDetail customer={customer} mykey={indice}/>
-                <SalesmanDetail salesman={salesman} mykey={indice}/>
-            </div>
-        );
     }
 }

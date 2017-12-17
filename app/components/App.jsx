@@ -15,6 +15,11 @@ export default class App extends React.Component {
             visit: visits[0],
             cliente: "",
             vendedor: "",
+            idfabrica: "",
+            fechadesde: "",
+            fechahasta: "",
+            fav: true,
+            mias: false,
         };
         this.appClick = this.appClick.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -24,11 +29,15 @@ export default class App extends React.Component {
     modificar(datos){
         this.setState({
             visits: datos,
-            visit: this.state.visits[this.state.indice],
+            visit: datos[this.state.indice],
         });
     }
     componentDidMount(){
-        let url = "https://dcrmt.herokuapp.com/api/visits/flattened?token="+TOKEN+"&customer="+this.state.cliente+"&salesman="+this.state.vendedor;
+        let favorito = "";
+        if(this.state.fav){
+            favorito = "1";
+        }
+        let url = "https://dcrmt.herokuapp.com/api/visits/flattened?token="+TOKEN+"&dateafter="+this.state.fechadesde+"&datebefore="+this.state.fechahasta+"&customer="+this.state.cliente+"&salesman="+this.state.vendedor+"&companyid="+this.state.idfabrica+"&favourites="+favorito;
         let respuesta = Jquey.ajax({
             url: url
         })
@@ -41,23 +50,35 @@ export default class App extends React.Component {
 
     }
     appClick(indice) {
-        console.log(indice);
-        console.log(this.state.visit["id"]);
         this.setState({
             indice: indice,
             visit: this.state.visits[indice],
         });
     }
-    filtrar(cliente, vendedor){
+    filtrar(cliente, vendedor, idfabrica, fechadesde, fechahasta, fav, mias){
         let clienteurl = encodeURI(cliente);
-        let vendedorurl = encodeURI(vendedor)
+        let vendedorurl = encodeURI(vendedor);
+        console.log(fechadesde);
         this.setState({
             cliente: clienteurl,
             vendedor: vendedorurl,
             indice: 0,
             visit: undefined,
+            idfabrica: idfabrica,
+            fechadesde: fechadesde,
+            fav: fav,
+            mias: mias
         });
-        let url = "https://dcrmt.herokuapp.com/api/visits/flattened?token="+TOKEN+"&customer="+clienteurl+"&salesman="+vendedorurl;
+        let favorito = "";
+        if(fav){
+            favorito = "1";
+        }
+        let urlaux = "https://dcrmt.herokuapp.com/api/visits/flattened?token=";
+        if(mias){
+            urlaux = "https://dcrmt.herokuapp.com/api/users/tokenOwner/visits/flattened?token=";
+        }
+        let url = urlaux+TOKEN+"&dateafter="+fechadesde+"&datebefore="+fechahasta+"&customer="+clienteurl+"&salesman="+vendedorurl+"&companyid="+idfabrica+"&favourites="+favorito;
+        console.log(url);
         let respuesta = Jquey.ajax({
             url: url
         })
@@ -67,13 +88,11 @@ export default class App extends React.Component {
             .done(function( data ) {
                 this.modificar(data)
             }.bind(this));
-        //this.render();
     }
 
     render() {
 
         return (<div>
-            <h2 id="heading">Practica 6</h2>
             <Filtros manejador={ this.filtrar }/>
             <VisitList visits={ this.state.visits } manejadorVisitsClick={ this.appClick }/>
             <Detail visita={this.state.visit} mykey={this.state.indice}/>

@@ -10,10 +10,29 @@ h2{
 }
 .verde {
   color: green;
+  background-color: #D9FFC9;
 }
 .rojo {
   color: red;
+  background-color: #FFCDC9;
 }
-Detail {
-  color: yellow;
+.star {
+  background-color: yellow;
+}
+.fright {
+  float: right;
+}
+.fleft {
+  float: left;
+}
+.filtros {
+  background-color: #AAF7F3;
+  padding: 2%;
+  margin: 0.5%;
+}
+.listelement {
+  background-color: #7ED2FF;
+}
+.detail {
+  background-color: beige;
 }

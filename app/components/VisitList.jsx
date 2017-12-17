@@ -1,5 +1,6 @@
 import  React from 'react';
 import VisitListElement from "./VisitListElement";
+import { Col, ButtonGroup, ListGroup } from 'react-bootstrap';
 
 export default class VisitList extends React.Component {
     constructor(props) {
@@ -12,11 +13,10 @@ export default class VisitList extends React.Component {
     render() {
         let visitas = this.props.visits;
         let visitelement = visitas.map((visita, indice) => {
-
-            return(<div key={"visitas"+indice}><VisitListElement visita={ visita } mykey={indice} manejadorClick={ this.visitClick }/></div>);
+            return(<div key={"visitas"+indice}><VisitListElement visita={ visita } mykey={indice} manejadorClick={ this.visitClick } fav={ visita.favourite }/></div>);
         });
         return(
-            <div>{ visitelement }</div>
+            <Col md={4} xs={4}><ListGroup>{ visitelement }</ListGroup></Col>
         );
     }
 }

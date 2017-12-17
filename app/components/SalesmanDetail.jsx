@@ -1,4 +1,5 @@
 import  React from 'react';
+import { Panel, Col } from 'react-bootstrap';
 
 export default class SalesmanDetail extends React.Component {
     render() {
@@ -13,9 +14,12 @@ export default class SalesmanDetail extends React.Component {
         }
         return(
             <div key={"Salesman"+this.props.mykey}>
-                <h2>Vendedor:</h2>
-                <img src={ url } width="50" height="60"/>
-                <h4>{ name }</h4>
+                <Col md={7} mdOffset={1} xd={12}>
+                    <Panel collapsible header="Vendedor" eventKey="1" className="listelement">
+                        <img src={ url } width="50" height="60" className="fleft"/>
+                        <h4 className="fright">{ name }</h4>
+                    </Panel>
+                </Col>
             </div>
         );
     }

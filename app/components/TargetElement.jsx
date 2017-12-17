@@ -1,5 +1,5 @@
 import  React from 'react';
-
+import { Col } from 'react-bootstrap';
 export default class TargetElement extends React.Component {
     render() {
         let target = this.props.target;
@@ -10,16 +10,17 @@ export default class TargetElement extends React.Component {
         let type = target["TargetType"];
         let name = type["name"];
         let color = success ? "verde": "rojo";
-        console.log(color)
         return(
-            <div key={this.props.mykey}>
-                <li className={ color }>
+            <div key={this.props.mykey} className={ color }>
+                <Col md={4}>
+                <h5 className={ color }>
                     { name }:
-                    <ul>
-                        <li>Compañia: { compañianame }</li>
-                        <li>Notas: { notas }</li>
+                </h5>
+                    <ul className={ color }>
+                        <p>Compañia: { compañianame }</p>
+                        <p>Notas: { notas }</p>
                     </ul>
-                </li>
+                </Col>
             </div>
         );
     }

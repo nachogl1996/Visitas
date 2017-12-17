@@ -1,0 +1,65 @@
+import React from 'react';
+import { Col, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+export default class FechaHasta extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            anio: this.props.anio,
+            mes: this.props.mes,
+        }
+        this.selecm = this.selecm.bind(this);
+        this.seleca = this.seleca.bind(this);
+    }
+    selecm(valor){
+        let mes = valor.target.value;
+        this.setState({
+            mes: mes,
+        });
+        this.props.manejadormes(mes);
+    }
+    seleca(valor){
+        let anio = valor.target.value;
+        this.setState({
+            anio: anio,
+        });
+        this.props.manejador(anio);
+    }
+    render() {
+        var numero;
+        let anioelement = [<option value="">--</option>];
+        for (numero = 2008; numero < 2028; numero++) {
+            anioelement[numero-2007]= <option value={ numero }>{ numero }</option>;
+        };
+        return (
+            <Col xs={12} md={6}>
+                <ControlLabel>Fecha Hasta</ControlLabel>
+                <FormGroup controlId="formControlsSelect">
+                    <Col xs={12} md={6}>
+                        <ControlLabel>Mes</ControlLabel>
+                        <FormControl componentClass="select" placeholder="select" onClick={ this.selecm }>
+                            <option value="">--</option>
+                            <option value="01">Enero</option>
+                            <option value="02">Febrero</option>
+                            <option value="03">Marzo</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Mayo</option>
+                            <option value="06">Junio</option>
+                            <option value="07">Julio</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </FormControl>
+                    </Col>
+                    <Col xs={12} md={6}>
+                        <ControlLabel>Año</ControlLabel>
+                        <FormControl componentClass="select" placeholder="select" onClick={ this.seleca }>
+                            { anioelement }
+                        </FormControl>
+                    </Col>
+                </FormGroup>
+            </Col>
+        );
+    }
+}
