@@ -1,8 +1,6 @@
 import  React from 'react';
-import Jquey from 'jquery';
 import Autocomplete from 'react-autocomplete';
-import { Button, Col, ControlLabel } from 'react-bootstrap';
-const TOKEN = "14457b646146cf31a40d";
+import { Button, Col, ControlLabel, Glyphicon } from 'react-bootstrap';
 export default class Clientes extends React.Component {
     constructor(props){
         super(props);
@@ -16,7 +14,7 @@ export default class Clientes extends React.Component {
         let clientelement = this.props.clienteescrito;
         return(
             <Col xs={6} md={3}>
-                <ControlLabel>Seleccione un cliente</ControlLabel>
+                <ControlLabel><Glyphicon glyph="user"/> Seleccione un cliente</ControlLabel>
                 <Autocomplete
                     placeholder="Seleccione un cliente"
                     items={ clientelement }
@@ -35,7 +33,7 @@ export default class Clientes extends React.Component {
                         </div>
                     )}
                 />
-                <Button onClick={ this.borrar } bsSize="small">Borrar</Button>
+                <Button onClick={ this.borrar } bsSize="small"><Glyphicon glyph="remove" alt="borrar"/></Button>
             </Col>
         );
     }

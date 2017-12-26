@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+import { Col, ControlLabel, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
 export default class FechaDesde extends React.Component {
     constructor(props){
         super(props);
@@ -22,7 +22,7 @@ export default class FechaDesde extends React.Component {
         };
         return (
             <Col xs={12} md={6}>
-                <ControlLabel>Fecha Desde</ControlLabel>
+                <ControlLabel><Glyphicon glyph="calendar"/> Fecha Desde</ControlLabel>
                 <FormGroup controlId="formControlsSelect">
                     <Col xs={12} md={6}>
                         <ControlLabel>Mes</ControlLabel>

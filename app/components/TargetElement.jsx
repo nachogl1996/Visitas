@@ -1,5 +1,5 @@
 import  React from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Glyphicon } from 'react-bootstrap';
 export default class TargetElement extends React.Component {
     render() {
         let target = this.props.target;
@@ -13,12 +13,12 @@ export default class TargetElement extends React.Component {
         return(
             <div key={this.props.mykey} className={ color }>
                 <Col md={4}>
-                <h5 className={ color }>
+                <h5 className={ color }><Glyphicon glyph={ success ? "ok": "remove" } alt={ success ? "completado": "incompleto" }/>
                     { name }:
                 </h5>
                     <ul className={ color }>
-                        <p>Compañia: { compañianame }</p>
-                        <p>Notas: { notas }</p>
+                        <p><Glyphicon glyph="piggy-bank"/> Compañia: { compañianame }</p>
+                        <p><Glyphicon glyph="list-alt"/> Notas: { notas }</p>
                     </ul>
                 </Col>
             </div>

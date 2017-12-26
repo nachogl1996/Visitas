@@ -1,5 +1,5 @@
 import  React from 'react';
-import { Panel, Col } from 'react-bootstrap';
+import { Panel, Col, Glyphicon } from 'react-bootstrap';
 export default class CustomerDetail extends React.Component{
     render() {
         let customer = this.props.customer;
@@ -16,22 +16,22 @@ export default class CustomerDetail extends React.Component{
             <div key={"Customer"+this.props.mykey}>
                 <Col md={8} mdOffset={0} xd={12}>
                     <Panel collapsible header="Comprador" eventKey="2" className="listelement">
-                        <h3>Nombre: { name }</h3>
-                        <h5>Id: { id } NIF: { cif }</h5>
+                        <h3><Glyphicon glyph="user"/> Nombre: { name }</h3>
+                        <h5><Glyphicon glyph="info-sign"/> Id: { id }  <Glyphicon glyph="credit-card"/> NIF: { cif }</h5>
                         <Col md={4}>
-                            <h4>Localización:</h4>
+                            <h4><Glyphicon glyph="map-marker"/> Localización:</h4>
                             <ul>
-                                <p>Dirección principal: { dir1 }</p>
-                                <p>Dirección secundaria: { dir2 }</p>
-                                <p>Ciudad: { city }</p>
-                                <p>Código Postal: { codigopostal }</p>
+                                <p><Glyphicon glyph="home"/> Dirección principal: { dir1 }</p>
+                                <p><Glyphicon glyph="home"/> Dirección secundaria: { dir2 }</p>
+                                <p><Glyphicon glyph="globe"/> Ciudad: { city }</p>
+                                <p><Glyphicon glyph="list-alt"/> Código Postal: { codigopostal }</p>
                             </ul>
                         </Col>
                         <Col md={4} mdOffset={2}>
-                            <h4>Contacto:</h4>
+                            <h4><Glyphicon glyph="book"/> Contacto:</h4>
                             <ul>
-                                <p>Telefono: { phone }</p>
-                                <p>Correo: { email }</p>
+                                <p><Glyphicon glyph="earphone"/> Telefono: { phone }</p>
+                                <p><Glyphicon glyph="envelope"/> Correo: { email }</p>
                             </ul>
                         </Col>
                     </Panel>

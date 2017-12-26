@@ -1,5 +1,5 @@
 import  React from 'react';
-import { Panel, Col } from 'react-bootstrap';
+import { Panel, Col, Glyphicon } from 'react-bootstrap';
 
 export default class VisitDetail extends React.Component {
     render() {
@@ -12,8 +12,8 @@ export default class VisitDetail extends React.Component {
             <div key={id}>
                 <Col md={8} mdOffset={0} xd={12}>
                     <Panel header={titulo}>
-                        <p>ID: { id }</p>
-                        <p>Notas: { notas }</p>
+                        <p><Glyphicon glyph="info-sign"/> ID: { id }</p>
+                        <p><Glyphicon glyph="list-alt"/> Notas: { notas }</p>
                     </Panel>
                 </Col>
             </div>

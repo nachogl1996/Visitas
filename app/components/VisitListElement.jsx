@@ -27,13 +27,13 @@ export default class VisitListElement extends React.Component {
             <div key={id}>
                 <ListGroupItem className="listelement">
                         <ButtonGroup vertical className="fright">
-                            <Button bsStyle={visita.favourite ? "warning": "default"} onClick={ this.favclick }><Glyphicon glyph="star"/></Button>
-                            <Button onClick={ this.elementClick }>Ver</Button>
+                            <Button bsStyle={visita.favourite ? "warning": "default"} onClick={ this.favclick }><Glyphicon alt={visita.favourite ? "marcado como favorito": "desmarcado como favorito"} glyph={visita.favourite ? "star": "star-empty"}/></Button>
+                            <Button onClick={ this.elementClick }><Glyphicon alt="Ver" glyph="eye-open"/></Button>
                         </ButtonGroup>
                         <div>
-                            <p id = "customer">Cliente: {customern}</p>
-                            <p id = "salesman">Vendedor: {salesmann}</p>
-                            <p id = "fecha">Fecha: {fecha}</p>
+                            <p id = "customer"><Glyphicon glyph="user"/> Cliente: {customern}</p>
+                            <p id = "salesman"><Glyphicon glyph="briefcase"/> Vendedor: {salesmann}</p>
+                            <p id = "fecha"><Glyphicon glyph="calendar"/> Fecha: {fecha}</p>
                         </div>
                 </ListGroupItem>
             </div>

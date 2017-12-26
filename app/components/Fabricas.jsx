@@ -1,8 +1,6 @@
 import  React from 'react';
-import Jquey from 'jquery';
-import { Button, Col, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
+import { Col, FormControl, FormGroup, ControlLabel, Glyphicon } from 'react-bootstrap';
 import FabricaElement from "./FabricaElement";
-const TOKEN = "14457b646146cf31a40d";
 export default class Fabricas extends React.Component {
     constructor(props){
         super(props);
@@ -20,7 +18,7 @@ export default class Fabricas extends React.Component {
         return(
             <Col xs={12} md={4}>
                 <FormGroup controlId="formControlsSelect">
-                    <ControlLabel>Seleccione una fabrica</ControlLabel>
+                    <ControlLabel><Glyphicon glyph="piggy-bank"/> Seleccione una fabrica</ControlLabel>
                     <FormControl componentClass="select" placeholder="select" onClick={ this.selec }>
                         { fabricaelement }
                     </FormControl>

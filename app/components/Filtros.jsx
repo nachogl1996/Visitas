@@ -1,7 +1,7 @@
 import  React from 'react';
 import Vendedores from "./Vendedores";
 import Clientes from "./Clientes"
-import { ButtonToolbar, Button, Panel, Col, Jumbotron } from 'react-bootstrap/lib';
+import { ButtonToolbar, Button, Panel, Jumbotron, Glyphicon } from 'react-bootstrap/lib';
 import Fabricas from "./Fabricas";
 import FechaDesde from "./FechaDesde";
 import FechaHasta from "./FechaHasta";
@@ -79,11 +79,11 @@ export default class Filtros extends React.Component {
             <div key={"Filtros"}>
                 <Jumbotron className="filtros">
                 <ButtonToolbar>
-                    <Button onClick={() => this.setState({ open: !this.state.open })}>
+                    <Button onClick={() => this.setState({ open: !this.state.open })}><Glyphicon glyph={ this.state.open ? "chevron-up": "chevron-down" } alt={ this.state.open ? "cerrar": "abrir" }/>
                         Filtros
                     </Button>
-                    <Button bsStyle="success" onClick={ this.filtrar }>Filtrar</Button>
-                    <Button bsStyle="danger" onClick={ this.cancelar }>Cancelar</Button>
+                    <Button bsStyle="success" onClick={ this.filtrar }><Glyphicon glyph="ok"/> Filtrar</Button>
+                    <Button bsStyle="danger" onClick={ this.cancelar }><Glyphicon glyph="remove"/> Cancelar</Button>
                 </ButtonToolbar>
                 <Panel collapsible expanded={this.state.open} className="listelement">
                     <Vendedores indice= { this.props.indicevendedor } manejador= { this.filtrovendedor } change={ this.changev } valorv={ this.props.valorv } vendedores={ this.props.vendedores } vendedorescrito={ this.props.vendedorescrito }/>

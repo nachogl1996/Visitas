@@ -1,5 +1,5 @@
 import  React from 'react';
-import { Panel, Col } from 'react-bootstrap';
+import { Panel, Col, Glyphicon } from 'react-bootstrap';
 
 export default class SalesmanDetail extends React.Component {
     render() {
@@ -17,7 +17,7 @@ export default class SalesmanDetail extends React.Component {
                 <Col md={8} mdOffset={0} xd={12}>
                     <Panel collapsible header="Vendedor" eventKey="1" className="listelement">
                         <img src={ url } width="50" height="60" className="fleft"/>
-                        <h4 className="fright">{ name }</h4>
+                        <h4 className="fright"><Glyphicon glyph="user"/> { name }</h4>
                     </Panel>
                 </Col>
             </div>

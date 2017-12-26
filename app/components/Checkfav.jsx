@@ -1,7 +1,5 @@
 import  React from 'react';
-import Jquey from 'jquery';
-import Autocomplete from 'react-autocomplete';
-import { Button, Col, FormGroup, Checkbox } from 'react-bootstrap';
+import { Col, FormGroup, Checkbox, Glyphicon } from 'react-bootstrap';
 const TOKEN = "14457b646146cf31a40d";
 export default class Checkfav extends React.Component {
     constructor(props){
@@ -21,10 +19,10 @@ export default class Checkfav extends React.Component {
         return(
             <Col md={2} xs={6}>
                 <FormGroup>
-                    <Checkbox onClick={ this.change } checked={this.props.fav}>Favoritos</Checkbox>
+                    <Checkbox onClick={ this.change } checked={this.props.fav}><Glyphicon glyph="star"/>Favoritos</Checkbox>
                 </FormGroup>
                 <FormGroup>
-                    <Checkbox onClick={ this.selec } checked={this.props.misvisitas}>Mis Visitas</Checkbox>
+                    <Checkbox onClick={ this.selec } checked={this.props.misvisitas}><Glyphicon glyph="heart"/>Mis Visitas</Checkbox>
                 </FormGroup>
             </Col>
         );
