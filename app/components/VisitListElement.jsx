@@ -5,37 +5,15 @@ import Jquey from 'jquery';
 export default class VisitListElement extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            fav: this.props.fav,
-        }
         this.elementClick = this.elementClick.bind(this);
         this.favclick = this.favclick.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
     }
     elementClick() {
         this.props.manejadorClick(this.props.mykey);
     }
     favclick(){
-        let visid = this.props.visita.id;
-        let fav = this.state.fav;
-        this.setState({
-            fav: !fav,
-        });
-        let url = "";
-        if (fav){
-            url = "https://dcrmt.herokuapp.com/api/users/tokenOwner/favourites/"+visid+"?token="+TOKEN+"&_method=DELETE";
-        } else {
-            url = "https://dcrmt.herokuapp.com/api/users/tokenOwner/favourites/"+visid+"?token="+TOKEN+"&_method=PUT";
-        }
-        let respuesta = Jquey.ajax({url: url})
-            .done(function( data ) {
-                console.log(data)
-            });
-    }
-    componentDidMount(){
-        this.setState({
-            fav: this.props.fav,
-        });
+
+        this.props.manejadorfav(this.props.mykey);
     }
     render() {
         let visita = this.props.visita;
@@ -49,7 +27,7 @@ export default class VisitListElement extends React.Component {
             <div key={id}>
                 <ListGroupItem className="listelement">
                         <ButtonGroup vertical className="fright">
-                            <Button bsStyle={this.state.fav ? "warning": "default"} onClick={ this.favclick }><Glyphicon glyph="star"/></Button>
+                            <Button bsStyle={visita.favourite ? "warning": "default"} onClick={ this.favclick }><Glyphicon glyph="star"/></Button>
                             <Button onClick={ this.elementClick }>Ver</Button>
                         </ButtonGroup>
                         <div>

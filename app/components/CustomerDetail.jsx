@@ -14,7 +14,7 @@ export default class CustomerDetail extends React.Component{
         let codigopostal = customer["postalCode"];
         return(
             <div key={"Customer"+this.props.mykey}>
-                <Col md={7} mdOffset={1} xd={12}>
+                <Col md={8} mdOffset={0} xd={12}>
                     <Panel collapsible header="Comprador" eventKey="2" className="listelement">
                         <h3>Nombre: { name }</h3>
                         <h5>Id: { id } NIF: { cif }</h5>

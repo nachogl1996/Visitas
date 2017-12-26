@@ -9,7 +9,7 @@ export default class Targetdetail extends React.Component {
         });
         return(
             <div>
-                <Col md={7} mdOffset={1} xd={12}>
+                <Col md={8} mdOffset={0} xd={12}>
                     <Panel collapsible header="Objetivos" eventKey="3" className="listelement">
                         { targetelement }
                     </Panel>

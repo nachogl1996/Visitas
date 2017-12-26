@@ -10,7 +10,7 @@ export default class VisitDetail extends React.Component {
         let titulo = "Fecha: "+fecha
         return(
             <div key={id}>
-                <Col md={7} mdOffset={1} xd={12}>
+                <Col md={8} mdOffset={0} xd={12}>
                     <Panel header={titulo}>
                         <p>ID: { id }</p>
                         <p>Notas: { notas }</p>

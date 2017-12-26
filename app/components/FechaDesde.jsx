@@ -3,32 +3,16 @@ import { Col, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 export default class FechaDesde extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            anio: this.props.anio,
-            mes: this.props.mes,
-        }
         this.selecm = this.selecm.bind(this);
         this.seleca = this.seleca.bind(this);
     }
     selecm(valor){
         let mes = valor.target.value;
-        this.setState({
-            mes: mes,
-        });
         this.props.manejadormes(mes);
     }
     seleca(valor){
         let anio = valor.target.value;
-        this.setState({
-            anio: anio,
-        });
         this.props.manejador(anio);
-    }
-    componentDidMount(){
-        this.setState({
-            anio: this.props.anio,
-            mes: this.props.mes,
-        });
     }
     render() {
         var numero;

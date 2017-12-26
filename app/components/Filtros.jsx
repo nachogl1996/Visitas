@@ -10,19 +10,7 @@ export default class Filtros extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cliente: "",
-            indicecliente: 0,
-            vendedor: "",
-            indicevendedor: 0,
-            idfabrica:"",
-            indicefabrica: 0,
-            mesdesde: "",
-            aniodesde:"",
-            meshasta: "",
-            aniohasta:"",
             open: false,
-            fav: true,
-            mias: false,
         };
         this.filtrar = this.filtrar.bind(this);
         this.cancelar = this.cancelar.bind(this);
@@ -35,92 +23,56 @@ export default class Filtros extends React.Component {
         this.filtrohastames = this.filtrohastames.bind(this);
         this.filtromias = this.filtromias.bind(this);
         this.filtrofav = this.filtrofav.bind(this);
+        this.changev = this.changev.bind(this);
+        this.changec = this.changec.bind(this);
     }
     filtrar(){
-        var fecha = new Date();
-        var anio = fecha.getFullYear();
-        let mesdesde = this.state.mesdesde;
-        let aniodesde = this.state.aniodesde;
-        let fechadesde = "";
-        if(aniodesde === "" && mesdesde === ""){
-            fechadesde = "";
-        } else {
-            if(mesdesde === ""){
-                fechadesde = aniodesde+"-01-01";
-            } else {
-                if(aniodesde === ""){
-                    fechadesde = anio+"-"+mesdesde+"-01";
-                } else {
-                    fechadesde = aniodesde+"-"+mesdesde+"-01";
-                }
-            }
-        }
-        let meshasta = this.state.meshasta;
-        let aniohasta = this.state.aniohasta;
-        let fechahasta = "";
-        if(aniohasta === "" && meshasta === ""){
-            fechahasta = "";
-        } else {
-            if(meshasta === ""){
-                fechahasta = aniohasta+"-01-31";
-            } else {
-                if(aniohasta === ""){
-                    fechahasta = anio+"-"+meshasta+"-28";
-                } else {
-                    fechahasta = aniohasta+"-"+meshasta+"-28";
-                }
-            }
-        }
-        this.props.manejador(this.state.cliente, this.state.vendedor, this.state.idfabrica, fechadesde, fechahasta, this.state.fav, this.state.mias );
+        this.props.manejador();
     }
     cancelar(){
-        this.props.manejador("","", "","","",true, false);
+        this.filtrovendedor("", { label: "", indice: 0 });
+        this.filtrocliente("", { label: "", indice: 0 });
+        this.filtrofabrica({ name: "", indice: 0, id: "" }, 0);
+        this.filtrodesdemes("");
+        this.filtrohastames("");
+        this.filtrohasta("");
+        this.filtrodesde("");
+        this.filtromias(false);
+        this.filtrofav(true);
+        this.props.manejador();
     }
-    filtrovendedor(vendedor, indice){
-        this.setState({
-            vendedor: vendedor,
-            indicevendedor: indice,
-        });
+    filtrovendedor(valor, vendedor){
+        this.props.manejadorvendedor(valor, vendedor);
+    }
+    changev(valor){
+        this.props.manejadorchangev(valor)
+    }
+    changec(valor){
+        this.props.manejadorchangec(valor)
     }
     filtrocliente(cliente, indice){
-        this.setState({
-            cliente: cliente,
-            indicecliente: indice,
-        });
+        this.props.manejadorcliente(cliente,indice);
     }
-    filtrofabrica(id, indice){
-        this.setState({
-            idfabrica: id,
-            indicefabrica: indice,
-        });
+    filtrofabrica(fabrica, indice){
+        this.props.manejadorfabrica(fabrica,indice);
     }
     filtrodesdemes(mes){
-        this.setState({
-            mesdesde: mes,
-        });
-    }filtrodesde(anio){
-        this.setState({
-            aniodesde: anio,
-        });
+       this.props.manejadordesdemes(mes);
+    }
+    filtrodesde(anio){
+        this.props.manejadordesde(anio);
     }
     filtrohasta(anio){
-        this.setState({
-            aniohasta: anio,
-        });
-    }filtrohastames(mes){
-        this.setState({
-            meshasta: mes,
-        });
+        this.props.manejadorhasta(anio);
+    }
+    filtrohastames(mes){
+       this.props.manejadorhastames(mes);
     }
     filtromias(mias){
-        this.setState({
-            mias: mias,
-        });
+        this.props.manejadormias(mias)
     }
     filtrofav(fav){
-        this.setState({
-            fav: fav,
-        });
+        this.props.manejadorfav(fav);
     }
     render() {
         return(
@@ -134,12 +86,12 @@ export default class Filtros extends React.Component {
                     <Button bsStyle="danger" onClick={ this.cancelar }>Cancelar</Button>
                 </ButtonToolbar>
                 <Panel collapsible expanded={this.state.open} className="listelement">
-                    <Vendedores indice= { this.state.indicevendedor } manejador= { this.filtrovendedor }/>
-                    <Clientes indice= { this.state.indicecliente } manejador= { this.filtrocliente }/>
-                    <Fabricas indice= { this.state.indicefabrica } manejador={ this.filtrofabrica }/>
-                    <Checkfav misvisitas={ this.state.mias } fav={ this.state.fav } manejador={ this.filtrofav } manejador2={ this.filtromias }/>
-                    <FechaDesde mes={ this.state.mesdesde} anio={ this.state.aniodesde } manejador={ this.filtrodesde } manejadormes={ this.filtrodesdemes }/>
-                    <FechaHasta mes={ this.state.meshasta} anio={ this.state.aniohasta } manejador={ this.filtrohasta } manejadormes={ this.filtrohastames }/>
+                    <Vendedores indice= { this.props.indicevendedor } manejador= { this.filtrovendedor } change={ this.changev } valorv={ this.props.valorv } vendedores={ this.props.vendedores } vendedorescrito={ this.props.vendedorescrito }/>
+                    <Clientes indice= { this.props.indicecliente } manejador= { this.filtrocliente } change={ this.changec } valorc={ this.props.valorc } clientes={ this.props.clientes } clienteescrito={ this.props.clienteescrito }/>
+                    <Fabricas indice= { this.props.indicefabrica } manejador={ this.filtrofabrica } fabricas={ this.props.fabricas }/>
+                    <Checkfav misvisitas={ this.props.mias } fav={ this.props.fav } manejador={ this.filtrofav } manejador2={ this.filtromias }/>
+                    <FechaDesde mes={ this.props.mesdesde} anio={ this.props.aniodesde } manejador={ this.filtrodesde } manejadormes={ this.filtrodesdemes }/>
+                    <FechaHasta mes={ this.props.meshasta} anio={ this.props.aniohasta } manejador={ this.filtrohasta } manejadormes={ this.filtrohastames }/>
                 </Panel>
                 </Jumbotron>
             </div>

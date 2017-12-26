@@ -20,7 +20,7 @@ export default class Detail extends React.Component {
                     <VisitDetail visit={visita} mykey={indice}/>
                     <Accordion>
                         <SalesmanDetail salesman={salesman} mykey={indice}/>
-                        <Col md={7} mdOffset={1} xd={12}>
+                        <Col md={8} mdOffset={0} xd={12}>
                             <Panel collapsible header="Objetivos" eventKey="3" className="listelement">
                                 <p>No hay objetivos</p>
                             </Panel>

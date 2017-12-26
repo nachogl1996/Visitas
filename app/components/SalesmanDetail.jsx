@@ -14,7 +14,7 @@ export default class SalesmanDetail extends React.Component {
         }
         return(
             <div key={"Salesman"+this.props.mykey}>
-                <Col md={7} mdOffset={1} xd={12}>
+                <Col md={8} mdOffset={0} xd={12}>
                     <Panel collapsible header="Vendedor" eventKey="1" className="listelement">
                         <img src={ url } width="50" height="60" className="fleft"/>
                         <h4 className="fright">{ name }</h4>
