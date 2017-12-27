@@ -1,6 +1,6 @@
 import  React from 'react';
 import VisitListElement from "./VisitListElement";
-import { Col, ButtonGroup, ListGroup } from 'react-bootstrap';
+import { Col, ListGroup } from 'react-bootstrap';
 
 export default class VisitList extends React.Component {
     constructor(props) {

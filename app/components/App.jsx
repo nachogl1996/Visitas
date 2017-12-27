@@ -243,7 +243,7 @@ export default class App extends React.Component {
         let respuesta = Jquey.ajax({url: url})
             .done(function( data ) {
                 console.log(data);
-                this.componentDidMount();
+                this.filtrar();
             }.bind(this));
     }
     filtrofabrica(fabrica, indice){
