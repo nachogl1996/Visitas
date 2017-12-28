@@ -32,7 +32,7 @@ export default class Filtros extends React.Component {
     cancelar(){
         this.filtrovendedor("", { label: "", indice: 0 });
         this.filtrocliente("", { label: "", indice: 0 });
-        this.filtrofabrica({ name: "", indice: 0, id: "" }, 0);
+        this.filtrofabrica(0);
         this.filtrodesdemes("");
         this.filtrohastames("");
         this.filtrohasta("");
@@ -53,8 +53,8 @@ export default class Filtros extends React.Component {
     filtrocliente(cliente, indice){
         this.props.manejadorcliente(cliente,indice);
     }
-    filtrofabrica(fabrica, indice){
-        this.props.manejadorfabrica(fabrica,indice);
+    filtrofabrica(indice){
+        this.props.manejadorfabrica(indice);
     }
     filtrodesdemes(mes){
        this.props.manejadordesdemes(mes);

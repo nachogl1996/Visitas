@@ -1,39 +1,15 @@
 import React from 'react';
 import './../assets/scss/main.scss';
-import { visits } from "./../assets/mock.data";
 import VisitList from "./VisitList";
 import Detail from "./Detail";
 import Jquey from 'jquery';
 import Filtros from "./Filtros";
+import  { connect } from 'react-redux';
+import { cargarvisitas, cambiaraniodesde, cambiaraniohasta, cambiarfav, cambiarindice, cambiarindicefabricas, cambiarmesdesde, cambiarmeshasta, cambiarmias, cambiarvalorc, cambiarvalorv, cargarclientes, cargarclientesescritos, cargarfabricas, cargarvendedores, cargarvendedoresescritos } from "./../reducers/actions";
 const TOKEN = "14457b646146cf31a40d";
-export default class App extends React.Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            indice: 0,
-            visits: visits,
-            visit: visits[0],
-            idfabrica: "",
-            fechadesde: "",
-            fechahasta: "",
-            fav: true,
-            mias: false,
-            indicecliente: 0,
-            indicevendedor: 0,
-            indicefabrica: 0,
-            mesdesde: "",
-            aniodesde:"",
-            meshasta: "",
-            aniohasta:"",
-            valorv: "",
-            vendedores: [{fullname: "hola", cif: "912812"}],
-            vendedorescrito: [{fullname: "hola", cif: "912812"}],
-            clientes: [{name: "hola", cif: "912812"}],
-            valorc: "",
-            clienteescrito: [{name: "hola", cif: "912812"}],
-            fabricas: [{name: "Cualquiera", id: ""}],
-            fabrica: {name: "Cualquiera", id: ""},
-        };
         this.appClick = this.appClick.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.modificar = this.modificar.bind(this);
@@ -52,59 +28,44 @@ export default class App extends React.Component {
         this.changev = this.changev.bind(this);
         this.compararc = this.compararc.bind(this);
         this.changec = this.changec.bind(this);
+        this.escribirfecha = this.escribirfecha.bind(this);
     }
     compararc(valor){
-        return(valor.label.toLowerCase().indexOf(this.state.valorc.toLowerCase()) !== -1);
+        return(valor.label.toLowerCase().indexOf(this.props.valorc.toLowerCase()) !== -1);
     }
     changec(valor){
-        this.setState({
-            valorc: valor.target.value,
-        });
-        let clientelement = this.state.clientes.filter(this.compararc);
-        this.setState({
-            clienteescrito: clientelement,
-        });
+        this.props.dispatch(cambiarvalorc(valor.target.value));
+        let clientelement = this.props.clientes.filter(this.compararc);
+        this.props.dispatch(cargarclientesescritos(clientelement));
     }
-    filtrocliente(valor, cliente){
-        this.setState({
-            valorc: valor,
-            indicecliente: cliente.indice,
-            cliente: cliente.label,
-        });
+    filtrocliente(valor){
+        this.props.dispatch(cambiarvalorc(valor));
     }
     compararv(valor){
-        return(valor.label.toLowerCase().indexOf(this.state.valorv.toLowerCase()) !== -1);
+        return(valor.label.toLowerCase().indexOf(this.props.valorv.toLowerCase()) !== -1);
     }
     changev(valor){
-        this.setState({
-            valorv: valor.target.value,
-        });
-        let vendedorelement = this.state.vendedores.filter(this.compararv);
-        this.setState({
-            vendedorescrito: vendedorelement,
-        });
+        this.props.dispatch(cambiarvalorv(valor.target.value));
+        let vendedorelement = this.props.vendedores.filter(this.compararv);
+        this.props.dispatch(cargarvendedoresescritos(vendedorelement));
     }
     filtrovendedor(valor, vendedor) {
-        this.setState({
-            valorv: valor,
-            indicevendedor: vendedor.indice,
-            vendedor: vendedor.label,
-        });
+        this.props.dispatch(cambiarvalorv(valor));
     }
     modificar(datos){
-        this.setState({
-            visits: datos,
-            visit: datos[this.state.indice],
-        });
+        this.props.dispatch(cargarvisitas(datos));
     }
     componentDidMount(){
-        let clienteurl = encodeURI(this.state.valorc);
-        let vendedorurl = encodeURI(this.state.valorv)
+        var idfabrica = this.props.fabricas[this.props.indicefabrica].id;
+        let clienteurl = encodeURI(this.props.valorc);
+        let vendedorurl = encodeURI(this.props.valorv);
+        let fechadesde = this.escribirfecha("01", this.props.mesdesde, this.props.aniodesde);
+        let fechahasta = this.escribirfecha("28", this.props.meshasta, this.props.aniohasta);
         let favorito = "";
-        if(this.state.fav){
+        if(this.props.fav){
             favorito = "1";
         }
-        let url = "https://dcrmt.herokuapp.com/api/visits/flattened?token="+TOKEN+"&dateafter="+this.state.fechadesde+"&datebefore="+this.state.fechahasta+"&customer="+clienteurl+"&salesman="+vendedorurl+"&companyid="+this.state.idfabrica+"&favourites="+favorito;
+        let url = "https://dcrmt.herokuapp.com/api/visits/flattened?token="+TOKEN+"&dateafter="+fechadesde+"&datebefore="+fechahasta+"&customer="+clienteurl+"&salesman="+vendedorurl+"&companyid="+idfabrica+"&favourites="+favorito;
         let respuesta = Jquey.ajax({
             url: url
         })
@@ -127,10 +88,8 @@ export default class App extends React.Component {
                 let vendedorelement = data.map((vendedor, indice) => {
                     return({ label: vendedor.fullname, indice: indice });
                 });
-                this.setState({
-                    vendedores: vendedorelement,
-                    vendedorescrito: vendedorelement,
-                });
+                this.props.dispatch(cargarvendedores(vendedorelement));
+                this.props.dispatch(cargarvendedoresescritos(vendedorelement));
             }.bind(this));
         let urlc = "https://dcrmt.herokuapp.com/api/customers?token="+TOKEN;
         let respuestac = Jquey.ajax({
@@ -143,10 +102,8 @@ export default class App extends React.Component {
                 let clientelement = data.map((cliente, indice) => {
                     return({ label: cliente.name, indice: indice });
                 });
-                this.setState({
-                    clientes: clientelement,
-                    clienteescrito: clientelement,
-                });
+                this.props.dispatch(cargarclientes(clientelement));
+                this.props.dispatch(cargarclientesescritos(clientelement));
             }.bind(this));
         let urlf = "https://dcrmt.herokuapp.com/api/companies?token="+TOKEN;
         let respuestaf = Jquey.ajax({
@@ -161,65 +118,45 @@ export default class App extends React.Component {
                 let fabricalement = array.map((fabrica, indice) => {
                     return({ name: fabrica.name, indice: indice, id: fabrica.id });
                 });
-                this.setState({
-                    fabricas: fabricalement,
-                    fabrica: fabricalement[this.state.indicefabrica],
-                });
+                this.props.dispatch(cargarfabricas(fabricalement));
             }.bind(this));
 
     }
     appClick(indice) {
-        this.setState({
-            indice: indice,
-            visit: this.state.visits[indice],
-        });
+        this.props.dispatch(cambiarindice(indice));
+    }
+    escribirfecha(dia, mes, anio){
+        var fecha = new Date();
+        var anioactual = fecha.getFullYear();
+        if(anio === "" && mes === ""){
+            return "";
+        } else {
+            if(mes === ""){
+                return anio+"-01-"+dia;
+            } else {
+                if(anio === ""){
+                    return anioactual+"-"+mes+"-"+dia;
+                } else {
+                    return anio+"-"+mes+"-"+dia;
+                }
+            }
+        }
     }
     filtrar(){
-        var fecha = new Date();
-        var anio = fecha.getFullYear();
-        let mesdesde = this.state.mesdesde;
-        let aniodesde = this.state.aniodesde;
-        let fechadesde = "";
-        if(aniodesde === "" && mesdesde === ""){
-            fechadesde = "";
-        } else {
-            if(mesdesde === ""){
-                fechadesde = aniodesde+"-01-01";
-            } else {
-                if(aniodesde === ""){
-                    fechadesde = anio+"-"+mesdesde+"-01";
-                } else {
-                    fechadesde = aniodesde+"-"+mesdesde+"-01";
-                }
-            }
-        }
-        let meshasta = this.state.meshasta;
-        let aniohasta = this.state.aniohasta;
-        let fechahasta = "";
-        if(aniohasta === "" && meshasta === ""){
-            fechahasta = "";
-        } else {
-            if(meshasta === ""){
-                fechahasta = aniohasta+"-01-31";
-            } else {
-                if(aniohasta === ""){
-                    fechahasta = anio+"-"+meshasta+"-28";
-                } else {
-                    fechahasta = aniohasta+"-"+meshasta+"-28";
-                }
-            }
-        }
-        let clienteurl = encodeURI(this.state.valorc);
-        let vendedorurl = encodeURI(this.state.valorv);
+        var idfabrica = this.props.fabricas[this.props.indicefabrica].id;
+        let fechadesde = this.escribirfecha("01", this.props.mesdesde, this.props.aniodesde);
+        let fechahasta = this.escribirfecha("28", this.props.meshasta, this.props.aniohasta);
+        let clienteurl = encodeURI(this.props.valorc);
+        let vendedorurl = encodeURI(this.props.valorv);
         let favorito = "";
-        if(this.state.fav){
+        if(this.props.fav){
             favorito = "1";
         }
         let urlaux = "https://dcrmt.herokuapp.com/api/visits/flattened?token=";
-        if(this.state.mias){
+        if(this.props.mias){
             urlaux = "https://dcrmt.herokuapp.com/api/users/tokenOwner/visits/flattened?token=";
         }
-        let url = urlaux+TOKEN+"&dateafter="+fechadesde+"&datebefore="+fechahasta+"&customer="+clienteurl+"&salesman="+vendedorurl+"&companyid="+this.state.idfabrica+"&favourites="+favorito;
+        let url = urlaux+TOKEN+"&dateafter="+fechadesde+"&datebefore="+fechahasta+"&customer="+clienteurl+"&salesman="+vendedorurl+"&companyid="+idfabrica+"&favourites="+favorito;
         let respuesta = Jquey.ajax({
             url: url
         })
@@ -231,7 +168,7 @@ export default class App extends React.Component {
             }.bind(this));
     }
     favclick(indice){
-        let visita = this.state.visits[indice];
+        let visita = this.props.visits[indice];
         let visid = visita.id;
         let fav = visita.favourite;
         let url = "";
@@ -246,50 +183,56 @@ export default class App extends React.Component {
                 this.filtrar();
             }.bind(this));
     }
-    filtrofabrica(fabrica, indice){
-        this.setState({
-            indicefabrica: indice,
-            fabrica: fabrica,
-            idfabrica: fabrica.id,
-        });
+    filtrofabrica(indice){
+        this.props.dispatch(cambiarindicefabricas(indice));
     }
     filtrodesdemes(mes){
-        this.setState({
-            mesdesde: mes,
-        });
+        this.props.dispatch(cambiarmesdesde(mes));
     }filtrodesde(anio){
-        this.setState({
-            aniodesde: anio,
-        });
+        this.props.dispatch(cambiaraniodesde(anio));
     }
     filtrohasta(anio){
-        this.setState({
-            aniohasta: anio,
-        });
+        this.props.dispatch(cambiaraniohasta(anio));
     }filtrohastames(mes){
-        this.setState({
-            meshasta: mes,
-        });
+        this.props.dispatch(cambiarmeshasta(mes));
     }
     filtromias(mias){
-        this.setState({
-            mias: mias,
-        });
+        this.props.dispatch(cambiarmias(mias));
     }
     filtrofav(fav){
-        this.setState({
-            fav: fav,
-        });
+        this.props.dispatch(cambiarfav(fav));
     }
     render() {
         return (<div>
-            <Filtros manejador={ this.filtrar } fabricas={ this.state.fabricas } valorv={ this.state.valorv } vendedores={ this.state.vendedores } vendedorescrito={ this.state.vendedorescrito } manejadorchangev={ this.changev } valorc={ this.state.valorc } clientes={ this.state.clientes } clienteescrito={ this.state.clienteescrito } manejadorchangec={ this.changec } manejadorvendedor={ this.filtrovendedor } manejadorcliente={ this.filtrocliente } manejadorfabrica={ this.filtrofabrica } manejadorfav={ this.filtrofav } manejadormias={ this.filtromias } manejadordesde={ this.filtrodesde } manejadordesdemes={ this.filtrodesdemes } manejadorhasta={ this.filtrohasta } manejadorhastames={ this.filtrohastames } indicecliente={ this.state.indicecliente } fav={ this.state.fav } mias={ this.state.mias } vendedor={ this.state.vendedor } cliente={ this.state.cliente } indicevendedor={ this.state.indicevendedor } idfabrica={ this.state.idfabrica } indicefabrica={ this.state.indicefabrica } mesdesde={ this.state.mesdesde } aniodesde={ this.state.aniodesde } meshasta={ this.state.meshasta } aniohasta={ this.state.aniohasta }/>
-            <VisitList visits={ this.state.visits } manejadorVisitsClick={ this.appClick } manejadorfav={ this.favclick }/>
-            <Detail visita={this.state.visit} mykey={this.state.indice}/>
+            <Filtros manejador={ this.filtrar } fabricas={ this.props.fabricas } valorv={ this.props.valorv } vendedores={ this.props.vendedores } vendedorescrito={ this.props.vendedoresescritos } manejadorchangev={ this.changev } valorc={ this.props.valorc } clientes={ this.props.clientes } clienteescrito={ this.props.clientesescritos } manejadorchangec={ this.changec } manejadorvendedor={ this.filtrovendedor } manejadorcliente={ this.filtrocliente } manejadorfabrica={ this.filtrofabrica } manejadorfav={ this.filtrofav } manejadormias={ this.filtromias } manejadordesde={ this.filtrodesde } manejadordesdemes={ this.filtrodesdemes } manejadorhasta={ this.filtrohasta } manejadorhastames={ this.filtrohastames } fav={ this.props.fav } mias={ this.props.mias } indicefabrica={ this.props.indicefabrica }/>
+            <VisitList visits={ this.props.visits } manejadorVisitsClick={ this.appClick } manejadorfav={ this.favclick }/>
+            <Detail visita={this.props.visits[this.props.indice]} mykey={this.props.indice}/>
             </div>
         );
 
     }
 
 }
+function mapStateToProps(state) {
+    return {
+        indice: state.indice,
+        visits: state.visits,
+        fav: state.fav,
+        mias: state.mias,
+        indicefabrica: state.indicefabrica,
+        mesdesde: state.mesdesde,
+        aniodesde:state.aniodesde,
+        meshasta: state.meshasta,
+        aniohasta:state.aniohasta,
+        valorv: state.valorv,
+        vendedores: state.vendedores,
+        vendedoresescritos: state.vendedoresescritos,
+        clientes: state.clientes,
+        valorc: state.valorc,
+        clientesescritos: state.clientesescritos,
+        fabricas: state.fabricas
+    };
+}
+export default connect(mapStateToProps)(App);
+
 

@@ -1,0 +1,11 @@
+import { visits } from "./../assets/mock.data";
+function visitsreducer(state = visits, action ) {
+    switch (action.type){
+        case 'CARGAR_VISITAS':
+            return action.visitas;
+        default:
+            return state;
+            console.log("noooo");
+    }
+}
+export default visitsreducer;

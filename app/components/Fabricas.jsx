@@ -9,7 +9,7 @@ export default class Fabricas extends React.Component {
     selec(valor){
         let indice = valor.target.value;
         let fabrica = this.props.fabricas[indice];
-        this.props.manejador(fabrica, indice);
+        this.props.manejador(indice);
     }
     render(){
         let fabricaelement = this.props.fabricas.map((fabrica) => {
