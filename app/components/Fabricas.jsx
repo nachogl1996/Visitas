@@ -1,17 +1,17 @@
-import  React from 'react';
+import React from 'react';
 import { Col, FormControl, FormGroup, ControlLabel, Glyphicon } from 'react-bootstrap';
 import FabricaElement from "./FabricaElement";
 export default class Fabricas extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.selec = this.selec.bind(this);
     }
-    selec(valor){
+    selec(valor) {
         let indice = valor.target.value;
         let fabrica = this.props.fabricas[indice];
         this.props.manejador(indice);
     }
-    render(){
+    render() {
         let fabricaelement = this.props.fabricas.map((fabrica) => {
             return(<FabricaElement fabrica={ fabrica }/>);
         });

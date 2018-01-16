@@ -5,7 +5,7 @@ import ReduxProvider from './components/ReduxProvider';
 import App from './components/App';
 
 const render = (Component) => {
-  ReactDOM.render(
+    ReactDOM.render(
     <AppContainer>
       <Component />
     </AppContainer>,
@@ -16,8 +16,8 @@ const render = (Component) => {
 render(ReduxProvider);
 
 if (module.hot) {
-  module.hot.accept('./components/ReduxProvider', () => {
-    const newApp = require('./components/ReduxProvider').default;
-    render(newApp);
-  });
+    module.hot.accept('./components/ReduxProvider', () => {
+        const newApp = require('./components/ReduxProvider').default;
+        render(newApp);
+    });
 }

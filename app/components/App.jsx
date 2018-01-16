@@ -4,7 +4,7 @@ import VisitList from "./VisitList";
 import Detail from "./Detail";
 import Jquey from 'jquery';
 import Filtros from "./Filtros";
-import  { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { cargarvisitas, cambiaraniodesde, cambiaraniohasta, cambiarfav, cambiarindice, cambiarindicefabricas, cambiarmesdesde, cambiarmeshasta, cambiarmias, cambiarvalorc, cambiarvalorv, cargarclientes, cargarclientesescritos, cargarfabricas, cargarvendedores, cargarvendedoresescritos } from "./../reducers/actions";
 const TOKEN = "14457b646146cf31a40d";
 class App extends React.Component {
@@ -30,21 +30,21 @@ class App extends React.Component {
         this.changec = this.changec.bind(this);
         this.escribirfecha = this.escribirfecha.bind(this);
     }
-    compararc(valor){
+    compararc(valor) {
         return(valor.label.toLowerCase().indexOf(this.props.valorc.toLowerCase()) !== -1);
     }
-    changec(valor){
+    changec(valor) {
         this.props.dispatch(cambiarvalorc(valor.target.value));
         let clientelement = this.props.clientes.filter(this.compararc);
         this.props.dispatch(cargarclientesescritos(clientelement));
     }
-    filtrocliente(valor){
+    filtrocliente(valor) {
         this.props.dispatch(cambiarvalorc(valor));
     }
-    compararv(valor){
+    compararv(valor) {
         return(valor.label.toLowerCase().indexOf(this.props.valorv.toLowerCase()) !== -1);
     }
-    changev(valor){
+    changev(valor) {
         this.props.dispatch(cambiarvalorv(valor.target.value));
         let vendedorelement = this.props.vendedores.filter(this.compararv);
         this.props.dispatch(cargarvendedoresescritos(vendedorelement));
@@ -52,37 +52,37 @@ class App extends React.Component {
     filtrovendedor(valor, vendedor) {
         this.props.dispatch(cambiarvalorv(valor));
     }
-    modificar(datos){
+    modificar(datos) {
         this.props.dispatch(cargarvisitas(datos));
     }
-    componentDidMount(){
-        var idfabrica = this.props.fabricas[this.props.indicefabrica].id;
+    componentDidMount() {
+        let idfabrica = this.props.fabricas[this.props.indicefabrica].id;
         let clienteurl = encodeURI(this.props.valorc);
         let vendedorurl = encodeURI(this.props.valorv);
         let fechadesde = this.escribirfecha("01", this.props.mesdesde, this.props.aniodesde);
         let fechahasta = this.escribirfecha("28", this.props.meshasta, this.props.aniohasta);
         let favorito = "";
-        if(this.props.fav){
+        if(this.props.fav) {
             favorito = "1";
         }
-        let url = "https://dcrmt.herokuapp.com/api/visits/flattened?token="+TOKEN+"&dateafter="+fechadesde+"&datebefore="+fechahasta+"&customer="+clienteurl+"&salesman="+vendedorurl+"&companyid="+idfabrica+"&favourites="+favorito;
+        let url = "https://dcrmt.herokuapp.com/api/visits/flattened?token=" + TOKEN + "&dateafter=" + fechadesde + "&datebefore=" + fechahasta + "&customer=" + clienteurl + "&salesman=" + vendedorurl + "&companyid=" + idfabrica + "&favourites=" + favorito;
         let respuesta = Jquey.ajax({
-            url: url
+            url: url,
         })
-            .fail(function () {
+            .fail(function() {
                 console.log("ERROR");
             })
-            .done(function( data ) {
-                this.modificar(data)
+            .done(function(data) {
+                this.modificar(data);
             }.bind(this));
-        let urlv = "https://dcrmt.herokuapp.com/api/salesmen?token="+TOKEN;
+        let urlv = "https://dcrmt.herokuapp.com/api/salesmen?token=" + TOKEN;
         let respuestav = Jquey.ajax({
-            url: urlv
+            url: urlv,
         })
-            .fail(function () {
+            .fail(function() {
                 console.log("ERROR al descargar vendedores");
             })
-            .done(function( data ) {
+            .done(function(data) {
                 let array1 = [{fullname: ""}];
                 let array = array1.concat(data);
                 let vendedorelement = data.map((vendedor, indice) => {
@@ -91,28 +91,28 @@ class App extends React.Component {
                 this.props.dispatch(cargarvendedores(vendedorelement));
                 this.props.dispatch(cargarvendedoresescritos(vendedorelement));
             }.bind(this));
-        let urlc = "https://dcrmt.herokuapp.com/api/customers?token="+TOKEN;
+        let urlc = "https://dcrmt.herokuapp.com/api/customers?token=" + TOKEN;
         let respuestac = Jquey.ajax({
-            url: urlc
+            url: urlc,
         })
-            .fail(function () {
+            .fail(function() {
                 console.log("ERROR al descargar clientes");
             })
-            .done(function( data ) {
+            .done(function(data) {
                 let clientelement = data.map((cliente, indice) => {
                     return({ label: cliente.name, indice: indice });
                 });
                 this.props.dispatch(cargarclientes(clientelement));
                 this.props.dispatch(cargarclientesescritos(clientelement));
             }.bind(this));
-        let urlf = "https://dcrmt.herokuapp.com/api/companies?token="+TOKEN;
+        let urlf = "https://dcrmt.herokuapp.com/api/companies?token=" + TOKEN;
         let respuestaf = Jquey.ajax({
-            url: urlf
+            url: urlf,
         })
-            .fail(function () {
+            .fail(function() {
                 console.log("ERROR al descargar clientes");
             })
-            .done(function( data ) {
+            .done(function(data) {
                 let array1 = [{name: "", id: ""}];
                 let array = array1.concat(data);
                 let fabricalement = array.map((fabrica, indice) => {
@@ -125,81 +125,79 @@ class App extends React.Component {
     appClick(indice) {
         this.props.dispatch(cambiarindice(indice));
     }
-    escribirfecha(dia, mes, anio){
-        var fecha = new Date();
-        var anioactual = fecha.getFullYear();
-        if(anio === "" && mes === ""){
+    escribirfecha(dia, mes, anio) {
+        let fecha = new Date();
+        let anioactual = fecha.getFullYear();
+        if(anio === "" && mes === "") {
             return "";
-        } else {
-            if(mes === ""){
-                return anio+"-01-"+dia;
-            } else {
-                if(anio === ""){
-                    return anioactual+"-"+mes+"-"+dia;
-                } else {
-                    return anio+"-"+mes+"-"+dia;
-                }
-            }
         }
+        if(mes === "") {
+            return anio + "-01-" + dia;
+        }
+        if(anio === "") {
+            return anioactual + "-" + mes + "-" + dia;
+        }
+        return anio + "-" + mes + "-" + dia;
+
     }
-    filtrar(){
-        var idfabrica = this.props.fabricas[this.props.indicefabrica].id;
+    filtrar() {
+        let idfabrica = this.props.fabricas[this.props.indicefabrica].id;
         let fechadesde = this.escribirfecha("01", this.props.mesdesde, this.props.aniodesde);
         let fechahasta = this.escribirfecha("28", this.props.meshasta, this.props.aniohasta);
         let clienteurl = encodeURI(this.props.valorc);
         let vendedorurl = encodeURI(this.props.valorv);
         let favorito = "";
-        if(this.props.fav){
+        if(this.props.fav) {
             favorito = "1";
         }
         let urlaux = "https://dcrmt.herokuapp.com/api/visits/flattened?token=";
-        if(this.props.mias){
+        if(this.props.mias) {
             urlaux = "https://dcrmt.herokuapp.com/api/users/tokenOwner/visits/flattened?token=";
         }
-        let url = urlaux+TOKEN+"&dateafter="+fechadesde+"&datebefore="+fechahasta+"&customer="+clienteurl+"&salesman="+vendedorurl+"&companyid="+idfabrica+"&favourites="+favorito;
+        let url = urlaux + TOKEN + "&dateafter=" + fechadesde + "&datebefore=" + fechahasta + "&customer=" + clienteurl + "&salesman=" + vendedorurl + "&companyid=" + idfabrica + "&favourites=" + favorito;
         let respuesta = Jquey.ajax({
-            url: url
+            url: url,
         })
-            .fail(function () {
+            .fail(function() {
                 console.log("ERROR");
             })
-            .done(function( data ) {
-                this.modificar(data)
+            .done(function(data) {
+                this.modificar(data);
             }.bind(this));
     }
-    favclick(indice){
+    favclick(indice) {
         let visita = this.props.visits[indice];
         let visid = visita.id;
         let fav = visita.favourite;
         let url = "";
-        if (fav){
-            url = "https://dcrmt.herokuapp.com/api/users/tokenOwner/favourites/"+visid+"?token="+TOKEN+"&_method=DELETE";
+        if (fav) {
+            url = "https://dcrmt.herokuapp.com/api/users/tokenOwner/favourites/" + visid + "?token=" + TOKEN + "&_method=DELETE";
         } else {
-            url = "https://dcrmt.herokuapp.com/api/users/tokenOwner/favourites/"+visid+"?token="+TOKEN+"&_method=PUT";
+            url = "https://dcrmt.herokuapp.com/api/users/tokenOwner/favourites/" + visid + "?token=" + TOKEN + "&_method=PUT";
         }
         let respuesta = Jquey.ajax({url: url})
-            .done(function( data ) {
+            .done(function(data) {
                 console.log(data);
                 this.filtrar();
             }.bind(this));
     }
-    filtrofabrica(indice){
+    filtrofabrica(indice) {
         this.props.dispatch(cambiarindicefabricas(indice));
     }
-    filtrodesdemes(mes){
+    filtrodesdemes(mes) {
         this.props.dispatch(cambiarmesdesde(mes));
-    }filtrodesde(anio){
+    }filtrodesde(anio) {
         this.props.dispatch(cambiaraniodesde(anio));
     }
-    filtrohasta(anio){
+    filtrohasta(anio) {
         this.props.dispatch(cambiaraniohasta(anio));
-    }filtrohastames(mes){
+    }filtrohastames(mes) {
         this.props.dispatch(cambiarmeshasta(mes));
     }
-    filtromias(mias){
+    filtromias(mias) {
         this.props.dispatch(cambiarmias(mias));
     }
-    filtrofav(fav){
+    filtrofav(fav) {
         this.props.dispatch(cambiarfav(fav));
     }
     render() {
@@ -221,18 +219,17 @@ function mapStateToProps(state) {
         mias: state.mias,
         indicefabrica: state.indicefabrica,
         mesdesde: state.mesdesde,
-        aniodesde:state.aniodesde,
+        aniodesde: state.aniodesde,
         meshasta: state.meshasta,
-        aniohasta:state.aniohasta,
+        aniohasta: state.aniohasta,
         valorv: state.valorv,
         vendedores: state.vendedores,
         vendedoresescritos: state.vendedoresescritos,
         clientes: state.clientes,
         valorc: state.valorc,
         clientesescritos: state.clientesescritos,
-        fabricas: state.fabricas
+        fabricas: state.fabricas,
     };
 }
 export default connect(mapStateToProps)(App);
-
 

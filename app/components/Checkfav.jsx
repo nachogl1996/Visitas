@@ -1,17 +1,17 @@
-import  React from 'react';
+import React from 'react';
 import { Col, FormGroup, Checkbox, Glyphicon } from 'react-bootstrap';
 const TOKEN = "14457b646146cf31a40d";
 export default class Checkfav extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.change = this.change.bind(this);
         this.selec = this.selec.bind(this);
     }
-    change(){
-        let fav = !this.props.fav
+    change() {
+        let fav = !this.props.fav;
         this.props.manejador(fav);
     }
-    selec(){
+    selec() {
         let mias = !this.props.misvisitas;
         this.props.manejador2(mias);
     }

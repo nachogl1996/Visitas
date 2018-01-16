@@ -1,6 +1,6 @@
-import  React from 'react';
+import React from 'react';
 import Vendedores from "./Vendedores";
-import Clientes from "./Clientes"
+import Clientes from "./Clientes";
 import { ButtonToolbar, Button, Panel, Jumbotron, Glyphicon } from 'react-bootstrap/lib';
 import Fabricas from "./Fabricas";
 import FechaDesde from "./FechaDesde";
@@ -26,10 +26,10 @@ export default class Filtros extends React.Component {
         this.changev = this.changev.bind(this);
         this.changec = this.changec.bind(this);
     }
-    filtrar(){
+    filtrar() {
         this.props.manejador();
     }
-    cancelar(){
+    cancelar() {
         this.filtrovendedor("", { label: "", indice: 0 });
         this.filtrocliente("", { label: "", indice: 0 });
         this.filtrofabrica(0);
@@ -41,37 +41,37 @@ export default class Filtros extends React.Component {
         this.filtrofav(true);
         this.props.manejador();
     }
-    filtrovendedor(valor, vendedor){
+    filtrovendedor(valor, vendedor) {
         this.props.manejadorvendedor(valor, vendedor);
     }
-    changev(valor){
-        this.props.manejadorchangev(valor)
+    changev(valor) {
+        this.props.manejadorchangev(valor);
     }
-    changec(valor){
-        this.props.manejadorchangec(valor)
+    changec(valor) {
+        this.props.manejadorchangec(valor);
     }
-    filtrocliente(cliente, indice){
-        this.props.manejadorcliente(cliente,indice);
+    filtrocliente(cliente, indice) {
+        this.props.manejadorcliente(cliente, indice);
     }
-    filtrofabrica(indice){
+    filtrofabrica(indice) {
         this.props.manejadorfabrica(indice);
     }
-    filtrodesdemes(mes){
-       this.props.manejadordesdemes(mes);
+    filtrodesdemes(mes) {
+        this.props.manejadordesdemes(mes);
     }
-    filtrodesde(anio){
+    filtrodesde(anio) {
         this.props.manejadordesde(anio);
     }
-    filtrohasta(anio){
+    filtrohasta(anio) {
         this.props.manejadorhasta(anio);
     }
-    filtrohastames(mes){
-       this.props.manejadorhastames(mes);
+    filtrohastames(mes) {
+        this.props.manejadorhastames(mes);
     }
-    filtromias(mias){
-        this.props.manejadormias(mias)
+    filtromias(mias) {
+        this.props.manejadormias(mias);
     }
-    filtrofav(fav){
+    filtrofav(fav) {
         this.props.manejadorfav(fav);
     }
     render() {
@@ -79,7 +79,7 @@ export default class Filtros extends React.Component {
             <div key={"Filtros"}>
                 <Jumbotron className="filtros">
                 <ButtonToolbar>
-                    <Button onClick={() => this.setState({ open: !this.state.open })}><Glyphicon glyph={ this.state.open ? "chevron-up": "chevron-down" } alt={ this.state.open ? "cerrar": "abrir" }/>
+                    <Button onClick={() => this.setState({ open: !this.state.open })}><Glyphicon glyph={ this.state.open ? "chevron-up" : "chevron-down" } alt={ this.state.open ? "cerrar" : "abrir" }/>
                         Filtros
                     </Button>
                     <Button bsStyle="success" onClick={ this.filtrar }><Glyphicon glyph="ok"/> Filtrar</Button>

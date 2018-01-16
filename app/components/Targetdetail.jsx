@@ -1,11 +1,11 @@
-import  React from 'react';
+import React from 'react';
 import TargetElement from "./TargetElement";
 import { Panel, Col } from 'react-bootstrap';
 export default class Targetdetail extends React.Component {
     render() {
         let targets = this.props.targets;
         let targetelement = targets.map((target, indice) => {
-            return(<div key={"TargetList"+indice}><ul><TargetElement target={target} mykey={indice}/></ul></div>)
+            return(<div key={"TargetList" + indice}><ul><TargetElement target={target} mykey={indice}/></ul></div>);
         });
         return(
             <div>

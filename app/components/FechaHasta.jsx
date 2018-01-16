@@ -1,25 +1,25 @@
 import React from 'react';
 import { Col, ControlLabel, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
 export default class FechaHasta extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.selecm = this.selecm.bind(this);
         this.seleca = this.seleca.bind(this);
     }
-    selecm(valor){
+    selecm(valor) {
         let mes = valor.target.value;
         this.props.manejadormes(mes);
     }
-    seleca(valor){
+    seleca(valor) {
         let anio = valor.target.value;
         this.props.manejador(anio);
     }
     render() {
-        var numero;
+        let numero;
         let anioelement = [<option value="">--</option>];
         for (numero = 2008; numero < 2028; numero++) {
-            anioelement[numero-2007]= <option value={ numero }>{ numero }</option>;
-        };
+            anioelement[numero - 2007] = <option value={ numero }>{ numero }</option>;
+        }
         return (
             <Col xs={12} md={6}>
                 <ControlLabel><Glyphicon glyph="calendar"/> Fecha Hasta</ControlLabel>

@@ -1,13 +1,13 @@
-import  React from 'react';
+import React from 'react';
 import Autocomplete from 'react-autocomplete';
 import { Button, Col, ControlLabel, Glyphicon } from 'react-bootstrap';
 export default class Clientes extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.borrar = this.borrar.bind(this);
     }
 
-    borrar(){
+    borrar() {
         this.props.manejador("", { label: "", indice: 0 });
     }
     render() {
@@ -16,11 +16,11 @@ export default class Clientes extends React.Component {
             <Col xs={6} md={3}>
                 <ControlLabel><Glyphicon glyph="user"/> Seleccione un cliente</ControlLabel>
                 <Autocomplete
-                    placeholder="Seleccione un cliente"
+                    inputProps={{ placeholder: 'Seleccione un cliente' }}
                     items={ clientelement }
                     getItemValue={ (item) => item.label }
                     renderItem={(item, isHighlighted) =>
-                        <div key={"cli"+item.indice } style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                        <div key={"cli" + item.indice } style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
                             {item.label}
                         </div>
                     }

@@ -1,4 +1,4 @@
-import  React from 'react';
+import React from 'react';
 import VisitDetail from "./VisitDetail";
 import TargetDetail from "./Targetdetail";
 import CustomerDetail from "./CustomerDetail";
@@ -7,16 +7,16 @@ import { Col, Accordion, Panel } from 'react-bootstrap';
 export default class Detail extends React.Component {
     render() {
         let visita = this.props.visita;
-        if(visita === null || visita === undefined){
+        if(visita === null || visita === undefined) {
             return(<h1>No hay detalles</h1>);
         }
         let indice = this.props.mykey;
-        let targets = visita["Targets"];
-        let customer = visita["Customer"];
-        let salesman = visita["Salesman"];
-        if(targets.length === 0){
+        let targets = visita.Targets;
+        let customer = visita.Customer;
+        let salesman = visita.Salesman;
+        if(targets.length === 0) {
             return(
-                <div key={"Detail"+indice}>
+                <div key={"Detail" + indice}>
                     <VisitDetail visit={visita} mykey={indice}/>
                     <Accordion>
                         <SalesmanDetail salesman={salesman} mykey={indice}/>
@@ -29,9 +29,9 @@ export default class Detail extends React.Component {
                     </Accordion>
                 </div>
             );
-        } else {
-            return(
-                <div key={"Detail"+indice}>
+        }
+        return(
+                <div key={"Detail" + indice}>
                     <VisitDetail visit={visita} mykey={indice}/>
                     <Accordion>
                         <SalesmanDetail salesman={salesman} mykey={indice}/>
@@ -39,7 +39,7 @@ export default class Detail extends React.Component {
                         <CustomerDetail customer={customer} mykey={indice}/>
                     </Accordion>
                 </div>
-            );
-        }
+        );
+
     }
 }
